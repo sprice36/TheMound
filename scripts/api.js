@@ -99,7 +99,7 @@ function pullStandingsAPI(){
             var aLibrary = data[aKey];
             libraryArray.push(aLibrary);
             console.log(libraryArray);
-         });
+        });
     });
 }
 
@@ -110,13 +110,14 @@ function pullTeamProfileAPI(){
     $.get(teamProfileAPI, function(data){
         var libraryArray = [];
         var keys = Object.keys(data);
-        console.log(keys);
+        // console.log(keys);
 
         keys.forEach(function(aKey){
             var aLibrary = data[aKey];
             libraryArray.push(aLibrary);
-            console.log(libraryArray);
+            // console.log(libraryArray);
          });
+         return(libraryArray);
     });
 }
 
