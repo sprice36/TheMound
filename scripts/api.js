@@ -6,7 +6,7 @@ var leagueScheduleAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sp
 
 function pullScheduleAPI() {
     $.get(leagueScheduleAPI, function(data){
-        var libraryArray = [];
+        libraryArray = [];
         var keys = Object.keys(data);
         console.log(keys);
      
@@ -16,6 +16,7 @@ function pullScheduleAPI() {
            console.log(libraryArray);
         });
     });
+    return(libraryArray);
 }
 
 //game boxscore API
