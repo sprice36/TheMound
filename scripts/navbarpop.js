@@ -70,7 +70,7 @@ function popTeamNames(teamNames) {
     })
 }
 
-function getPlayerPositions(teamIDS) {
+function getAndPopPlayerPositions(teamIDS) {
     var positions = [];
     var urlAddon = teamIDS[0];
     newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg')
@@ -79,11 +79,28 @@ function getPlayerPositions(teamIDS) {
         playerArray.forEach(function(stuff){
             positions.push(stuff.primary_position);
         })
-        console.log(positions);
+        var positionsFixed = [...new Set(positions)];
+        positionsFixed.forEach(function(point) {
+            var positionName = {
+                "DH": "Hitter",
+                "CF": "Center Field",
+                "LF": "Left Field",
+                "RF": "Right Field",
+                "C": "Catcher",
+                "SP": "Starting Pitcher",
+                "RP": "Relief Pitcher",
+                "SS": "Short Stop",
+                "1B": "1ST Base",
+                "2B": "2ND Base",
+                "3B": "3RD Base",
+            };
+            var namePositions = positionName[point];
+            var newSelector = $(`<option value=${namePositions}>${namePositions}</option>`);
+            $('[data-target-positions]').append(newSelector);
     })
-
-
+    })
 }
+
 
 function startTheProgram(URL){ 
     var ajaxRequest = $.get(URL);
@@ -98,7 +115,8 @@ function nextStep(URL){
 
     ajaxRequest
     .then(getTeamIDS)
-    .then(getPlayerPositions)
+    .then(getAndPopPlayerPositions)
+    // .then(popPlayerPositions)
 }
 
 startTheProgram(hierarchy);
