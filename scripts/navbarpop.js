@@ -97,7 +97,42 @@ function getAndPopPlayerPositions(teamIDS) {
             var namePositions = positionName[point];
             var newSelector = $(`<option value=${namePositions}>${namePositions}</option>`);
             $('[data-target-positions]').append(newSelector);
+        })
     })
+}
+
+function pullSchedule(data){
+    var cleanDate = [];
+    var key = Object.values(data);
+    var gameSchedule = key[2];
+    var gameDays = Object.values(gameSchedule);
+    var days = [];
+    gameDays.forEach(function(steps){
+        days.push(steps.scheduled.slice(0, 10));
+    })
+    var daysFixed = [...new Set(days)]
+    var daysSorted = daysFixed.sort(function(a, b){
+        if (a < b){
+            return -1
+        } else if (b < a) {
+            return 1
+        } else {
+            return 0
+        }   
+    });
+    daysSorted.forEach(function(date){
+        cleanDate.push(moment(date).format('MMM Do YY'));
+        // console.log(cleanDate);
+        return(cleanDate);
+    })
+    return(cleanDate)
+}
+
+function popNavDate(cleanDate){
+    // console.log(cleanDate);
+    cleanDate.forEach(function(print){
+        var newSelector = $(`<option value=${print}>${print}</option>`);
+            $('[data-target-schedule]').append(newSelector);
     })
 }
 
@@ -119,5 +154,14 @@ function nextStep(URL){
     // .then(popPlayerPositions)
 }
 
+function gameSchedule(URL){
+    var ajaxRequest = $.get(URL)
+
+    ajaxRequest
+    .then(pullSchedule)
+    .then(popNavDate)
+}
+
 startTheProgram(hierarchy);
 nextStep(hierarchy);
+gameSchedule(leagueScheduleAPI);
