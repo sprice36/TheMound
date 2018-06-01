@@ -71,35 +71,37 @@ function popTeamNames(teamNames) {
 }
 
 function getAndPopPlayerPositions(teamIDS) {
-    var positions = [];
-    var urlAddon = teamIDS[0];
-    newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg')
-    $.get(newURL, function(data) {
-        var playerArray = data.players
-        playerArray.forEach(function(stuff){
-            positions.push(stuff.primary_position);
-        })
-        var positionsFixed = [...new Set(positions)];
-        positionsFixed.forEach(function(point) {
-            var positionName = {
-                "DH": "Hitter",
-                "CF": "Center Field",
-                "LF": "Left Field",
-                "RF": "Right Field",
-                "C": "Catcher",
-                "SP": "Starting Pitcher",
-                "RP": "Relief Pitcher",
-                "SS": "Short Stop",
-                "1B": "1ST Base",
-                "2B": "2ND Base",
-                "3B": "3RD Base",
-            };
-            var namePositions = positionName[point];
-            var newSelector = $(`<option value=${namePositions}>${namePositions}</option>`);
-            $('[data-target-positions]').append(newSelector);
+    $('[data-target-positions]').one('click', function(){
+        var positions = [];
+        var urlAddon = teamIDS[0];
+        newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg')
+        $.get(newURL, function(data) {
+            var playerArray = data.players
+            playerArray.forEach(function(stuff){
+                positions.push(stuff.primary_position);
+            })
+            var positionsFixed = [...new Set(positions)];
+            positionsFixed.forEach(function(point) {
+                var positionName = {
+                    "DH": "Hitter",
+                    "CF": "Center Field",
+                    "LF": "Left Field",
+                    "RF": "Right Field",
+                    "C": "Catcher",
+                    "SP": "Starting Pitcher",
+                    "RP": "Relief Pitcher",
+                    "SS": "Short Stop",
+                    "1B": "1ST Base",
+                    "2B": "2ND Base",
+                    "3B": "3RD Base",
+                };
+                var namePositions = positionName[point];
+                var newSelector = $(`<option value=${namePositions}>${namePositions}</option>`);
+                $('[data-target-positions]').append(newSelector);
+            })
         })
     })
-}
+    }
 
 function pullSchedule(data){
     var cleanDate = [];
@@ -162,6 +164,6 @@ function gameSchedule(URL){
     .then(popNavDate)
 }
 
-startTheProgram(hierarchy);
-nextStep(hierarchy);
-gameSchedule(leagueScheduleAPI);
+// startTheProgram(hierarchy);
+// nextStep(hierarchy);
+// gameSchedule(leagueScheduleAPI);

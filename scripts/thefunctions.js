@@ -161,55 +161,86 @@ function getTeamInfo(team){
         })[0];
     var teamKey = foundIt.ID;
     var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg';
-    /*console.log(foundIt);
-    console.log(teamKey);
-    console.log(teamInfoURL); */
+    // console.log(foundIt);
+    // console.log(teamKey);
+    // console.log(teamInfoURL);
                             
     $.get(teamInfoURL, function (data){
         var libraryArray = [];
         var keys = Object.keys(data);
-        //console.log(keys);
+        // console.log(keys);
         keys.forEach(function(aKey){
             var aLibrary = data[aKey];
             libraryArray.push(aLibrary);
-             console.log(libraryArray);
-
-            libraryArray.forEach(function (data){
-                var itemsArray = [];
-                var items = Object.values(data.indexOf(4));
-                 console.log(items);
-                });
+            // console.log(libraryArray);
+        });
+        
+        libraryArray.forEach(function (data){
+            var itemsArray = [];
         });  
+        console.log(libraryArray);
     });
 }
 
-//getTeamInfo('Braves');
+// getTeamInfo('Braves');
 
 function getPlayerInfo(team){
     var foundIt = $.grep(teams, function(element){
         return element.name === team;
-        })[0];
+    })[0];
     var teamKey = foundIt.ID;
     var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg';
     /*console.log(foundIt);
     console.log(teamKey);
     console.log(teamInfoURL); */
-                            
+    var libraryArray = [];
+    var libraryArray2 = [];
+    // var itemsArray = [];
+    
     $.get(teamInfoURL, function (data){
-        var libraryArray = [];
         var keys = Object.keys(data);
-        console.log(keys);
+        // console.log(keys);
         keys.forEach(function(aKey){
             var aLibrary = data[aKey];
             libraryArray.push(aLibrary);
-             //console.log(libraryArray);
-
+            libraryArray2.push(aLibrary);
             libraryArray.forEach(function (data){
-                var itemsArray = [];
                 var items = Object.values(data);
-                 console.log(items);
-                });
+                // itemsArray.push(items);
+            });
         });  
+        var items = Object.values(libraryArray[4]);
+        
+        console.log(items);
+        console.log(libraryArray);
+        
+        $('[data-team-team]').append(libraryArray[0]);
+        $('[data-team-team]').append(items[5]);
+        $('[data-team-team]').append(items[6]);
+        $('[data-team-team]').removeClass("hidden");
+
+        var playersOnTeam = libraryArray[8];
+        // console.log(playersOnTeam)
+        playersOnTeam.forEach(function(player) {
+            var playerInfoArr = []
+            
+            var playerName = player.full_name
+            playerInfoArr.push(playerName);
+            var playerJersey = player.jersey_number
+            playerInfoArr.push(playerJersey);
+            var playerBirth = player.birthdate
+            playerInfoArr.push(playerBirth);
+            var playerPosition = player.primary_position
+            playerInfoArr.push(positionName[playerPosition]);
+
+            var newPlayerInfo = $('<div>');
+            playerInfoArr.forEach(function(blurb){
+                $(newPlayerInfo).append(blurb);
+            })
+            $('[data-team-player]').append(newPlayerInfo);
+
+            
+        })
     });
 }
 

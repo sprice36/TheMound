@@ -1,10 +1,14 @@
 
 function teamListener(){
     $('[data-target-teams]').on('change', function(data){
+        $('[data-team-team]').html($('[data-target-team]').children());
+        $('[data-team-player]').html($('[data-target-]').children());
         var teamPicked = $('[data-target-teams] option:selected').text();
-        console.log(teamPicked);
-        return(teamPicked);
+        // console.log(teamPicked);
+        // getTeamInfo(teamPicked);
+        getPlayerInfo(teamPicked);
     })
+    
 }
 
 function positionListener(){
@@ -23,6 +27,5 @@ function dateListener(){
 })
 }
 
-teamListener();
-positionListener();
-dateListener();
+
+

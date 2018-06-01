@@ -2,6 +2,21 @@
 //http://my-little-cors-proxy.herokuapp.com/
 
 //league schedule API
+
+var positionName = {
+    "DH": "Hitter",
+    "CF": "Center Field",
+    "LF": "Left Field",
+    "RF": "Right Field",
+    "C": "Catcher",
+    "SP": "Starting Pitcher",
+    "RP": "Relief Pitcher",
+    "SS": "Short Stop",
+    "1B": "1ST Base",
+    "2B": "2ND Base",
+    "3B": "3RD Base",
+};
+
 var leagueScheduleAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/games/2018/REG/schedule.json?api_key=bacyjb6cyn45qk6zdcz6hfeg';
 
 function pullScheduleAPI() {
