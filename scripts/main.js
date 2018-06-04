@@ -2,8 +2,9 @@
 // CORS workaround http://my-little-cors-proxy.herokuapp.com/
 
 startTheProgram(hierarchy);
-nextStep(hierarchy);
+// nextStep(hierarchy);
 gameSchedule(leagueScheduleAPI);
 
 teamListener();
 positionListener();
+

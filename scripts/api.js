@@ -13,7 +13,7 @@
 //     return true;
 // }
 
-var myAPIKey = 'aq6af4a5htdq7eh68yf93cvr'
+var myAPIKey = 'v25psy96fn22sgw33mjqyuhy'
 var myAPIKey2 = 'z8snf94begn37nrf5b7r9s5v'
 
 var positionName = {

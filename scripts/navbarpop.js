@@ -70,38 +70,15 @@ function popTeamNames(teamNames) {
     })
 }
 
-function getAndPopPlayerPositions(teamIDS) {
-    $('[data-target-positions]').one('click', function(){
-        var positions = [];
-        var urlAddon = teamIDS[0];
-        newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=' + myAPIKey)
-        $.get(newURL, function(data) {
-            var playerArray = data.players
-            playerArray.forEach(function(stuff){
-                positions.push(stuff.primary_position);
-            })
-            var positionsFixed = [...new Set(positions)];
-            positionsFixed.forEach(function(point) {
-                var positionName = {
-                    "DH": "Hitter",
-                    "CF": "Center Field",
-                    "LF": "Left Field",
-                    "RF": "Right Field",
-                    "C": "Catcher",
-                    "SP": "Starting Pitcher",
-                    "RP": "Relief Pitcher",
-                    "SS": "Short Stop",
-                    "1B": "1ST Base",
-                    "2B": "2ND Base",
-                    "3B": "3RD Base",
-                };
-                var namePositions = positionName[point];
-                var newSelector = $(`<option value=${namePositions}>${namePositions}</option>`);
-                $('[data-target-positions]').append(newSelector);
-            })
-        })
+function getAndPopPlayerPositions() {
+    var namePositions = Object.values(positionName);
+    console.log(namePositions);
+    namePositions.forEach(function(place){
+        var newSelector = $(`<option value=${place}>${place}</option>`);
+        $('[data-target-positions]').append(newSelector);
     })
-    }
+}
+    
 
 function pullSchedule(data){
     var cleanDate = [];
@@ -147,15 +124,15 @@ function startTheProgram(URL){
     .then(popTeamNames)
 }
 
-function nextStep(URL){
-    var ajaxRequest = $.get(URL);
 
-    ajaxRequest
-    .then(getTeamIDS)
-    .then(getAndPopPlayerPositions)
-    // .then(popPlayerPositions)
-}
+// function nextStep(URL){
+//     var ajaxRequest = $.get(URL);
 
+//     ajaxRequest
+//     .then(getTeamIDS)
+//     .then(getAndPopPlayerPositions)
+//     // .then(popPlayerPositions)
+// }
 function gameSchedule(URL){
     var ajaxRequest = $.get(URL)
 
@@ -165,5 +142,5 @@ function gameSchedule(URL){
 }
 
 startTheProgram(hierarchy);
-nextStep(hierarchy);
+// nextStep(hierarchy);
 gameSchedule(leagueScheduleAPI);

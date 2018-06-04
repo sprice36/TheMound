@@ -42,39 +42,7 @@ function getTeamID(teamName){
 });
 
 }
-/*
-getTeamID('Red Sox');
-getTeamID('Yankees');
-getTeamID('Rays');
-getTeamID('Blue Jays');
-getTeamID('Orioles');
-getTeamID('Indians');
-getTeamID('Tigers');
-getTeamID('Twins');
-getTeamID('Royals');
-getTeamID('White Sox');
-getTeamID('Astros');
-getTeamID('Mariners');
-getTeamID('Angels');
-getTeamID('Athletics');
-getTeamID('Rangers');
-getTeamID('Nationals');
-getTeamID('Braves');
-getTeamID('Phillies');
-getTeamID('Mets');
-getTeamID('Marlins');
-getTeamID('Brewers');
-getTeamID('Cubs');
-getTeamID('Cardinals');
-getTeamID('Pirates');
-getTeamID('Reds');
-getTeamID('Rockies');
-getTeamID('Diamondbacks');
-getTeamID('Dodgers');
-getTeamID('Giants');
-getTeamID('Padres');
 
-*/
 
 var teams  =       [ {name: 'Red Sox',  ID:  '93941372-eb4c-4c40-aced-fe3267174393'},
                      {name: 'Yankees',  ID: 'a09ec676-f887-43dc-bbb3-cf4bbaee9a18'},
@@ -211,8 +179,8 @@ function getPlayerInfo(team){
         });  
         var items = Object.values(libraryArray[4]);
         
-        console.log(items);
-        console.log(libraryArray);
+        // console.log(items);
+        // console.log(libraryArray);
         
         $('[data-team-team]').append(libraryArray[0]);
         $('[data-team-team]').append(items[5]);
@@ -283,55 +251,6 @@ function getPositionInfo(team, bool){
 
 //getPlayerInfo('Braves');
 
-
-
-// // function checkPlayerPos(something){
-//     // $.get(leagueLeaders, function(data){
-//         // var playerPosStats = []
-//         // var santeria = [];
-//         // var libraryArray = [];
-//         // console.log(data);
-//         var values = Object.values(data);
-//         var playerStats = values[1];
-//         playerStats.forEach(function(calls){
-//             var callValue = Object.values(calls);
-//             playerPosStats.push(callValue[3]);
-//             playerPosStats.push(callValue[4]);
-//         })
-//         console.log(playerPosStats)
-//         playerPosStats.forEach(function(calls){
-//             // console.log(calls);
-//             var callKeys = Object.keys(calls);
-//             // console.log(callKeys);
-//             callKeys.forEach(function(blam){
-//                 var lightning = (calls[blam]);
-//                 // console.log(lightning);
-//                 var glowing = lightning['players']
-//                 santeria.push(glowing);
-
-//             })
-//         })
-//         var playerAndPos = {};
-//         santeria.forEach(function(datum){
-//             datum.forEach(function(tonight){
-//                 // console.log(tonight)
-//                 var tempObj = {};
-//                 var playerFullName = tonight['first_name'] + ' ' + tonight['last_name'];
-//                 var playerFullPosition = tonight['primary_position'];
-//                 // console.log(playerFullName);
-//                 libraryArray.push(playerFullName);
-//                 // console.log(playerFullPosition);
-//                 tempObj['position'] = playerFullPosition;
-//                 playerAndPos[playerFullName] = tempObj;
-
-//             })
-//         libraryArray = [...new Set(libraryArray)];
-//         console.log(libraryArray.sort());
-//         console.log(playerAndPos);
-//         })
-        
-//     })
-// }
 function allTeamArray(data, bool){
     teamArray = []
     data.forEach(function(obj){
@@ -340,9 +259,69 @@ function allTeamArray(data, bool){
     teamArray.forEach(function(obj, index){
         setTimeout(function() {
         console.log(obj);
-        getPositionInfo(obj, bool);
-        }, 1000 * index);
+        
+        // getPositionInfo(obj, bool);
+        // }, 1000 * index);
         
     })
     
+})
+}
+
+
+
+function getAllTeamInfo(data){
+    var allTeamIDS = []
+    var teamIDS = Object.values(data);
+    // console.log(teamIDS);
+    teamIDS.forEach(function(thing){
+        var teamID = thing['ID'];
+        // console.log(teamID);
+        allTeamIDS.push(teamID);
+    })
+    // console.log(allTeamIDS);
+    var allTeamInfo = []
+    allTeamIDS.forEach(function(value, index){
+        setTimeout(function() {
+            var teamNameURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + value + '/profile.json?api_key=' + myAPIKey;
+            $.get(teamNameURL, function(thing){
+                var playersOnTeam = thing['players']
+            playersOnTeam.forEach(function(loop){
+                var playerCollection = {}
+                var playerID = loop['id'];
+                var playerName = loop['full_name'];
+                var playerPosition = loop['primary_position'];
+                // var playerBirth = loop[''];
+                var playerAge = loop['birthdate'];
+                var playerStarted = loop['pro_debut'];
+                playerCollection['name'] = playerName;
+                playerCollection['ID'] = playerID;
+                // playerCollection['Birth place'] = playerBirth;
+                playerCollection['Position'] = playerPosition;
+                playerCollection['Birthday'] = playerAge;
+                playerCollection['Debut'] = playerStarted;
+                allTeamInfo.push(playerCollection);
+            })   
+            console.log(allTeamInfo);
+            localStorage.setItem('allplayer', JSON.stringify(allTeamInfo));
+            })
+        }, 1500 * index)
+    })
+}
+// setTimeout(getAllTeamInfo, 2000, teams);
+
+var allPlayer = localStorage.getItem('allplayer');
+var allPlayer = JSON.parse(allPlayer);
+
+
+function positionChecker(arr, positionPickedShort){
+    arr.forEach(function(val){
+        if (val['Position'] === positionPickedShort){
+            var newDiv = $('<div>');
+            newDiv.append(JSON.stringify(val));
+            console.log(val);
+            console.log(newDiv);
+            $('[data-player-info]').append(newDiv);
+        }
+    })
 }

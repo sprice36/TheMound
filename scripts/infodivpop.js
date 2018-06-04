@@ -7,12 +7,14 @@ function teamListener(){
         // console.log(teamPicked);
         // getTeamInfo(teamPicked);
         getPlayerInfo(teamPicked);
+        $('[data-team-div]').removeClass('hidden');
+        $('[data-position-div]').addClass('hidden');
     })
     
 }
 
 function positionListener(){
-    allTeamArray(teams, positionPickedShort);
+    getAndPopPlayerPositions();
     $('[data-target-positions]').on('change', function(data){
         var positionPicked = $('[data-target-positions] option:selected').text();
         var positionLong = Object.values(positionName);
@@ -20,7 +22,10 @@ function positionListener(){
         var positionShort = Object.keys(positionName);
         var positionPickedShort = positionShort[positionLong.indexOf(positionPicked)];
         console.log(positionPickedShort);
-        getPositionInfo();
+        positionChecker(allPlayer, positionPickedShort);
+        $('[data-team-div]').addClass('hidden');
+        $('[data-position-div]').removeClass('hidden');
+        
     })
 }
 
