@@ -12,10 +12,15 @@ function teamListener(){
 }
 
 function positionListener(){
+    allTeamArray(teams, positionPickedShort);
     $('[data-target-positions]').on('change', function(data){
         var positionPicked = $('[data-target-positions] option:selected').text();
-        console.log(positionPicked);
-        return(positionPicked);
+        var positionLong = Object.values(positionName);
+        console.log(positionLong);
+        var positionShort = Object.keys(positionName);
+        var positionPickedShort = positionShort[positionLong.indexOf(positionPicked)];
+        console.log(positionPickedShort);
+        getPositionInfo();
     })
 }
 
@@ -26,6 +31,8 @@ function dateListener(){
         return(datePicked);
 })
 }
+
+
 
 
 

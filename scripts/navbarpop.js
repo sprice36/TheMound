@@ -1,4 +1,4 @@
-var hierarchy = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/league/hierarchy.json?api_key=g853qfg7gsw5eztfz77uvyfx';
+var hierarchy = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/league/hierarchy.json?api_key=' + myAPIKey;
 
 function getTeamNames(data) {
     // $.get(hierarchy, function(data) {
@@ -27,8 +27,8 @@ function getTeamNames(data) {
                 })
             })
         })
-       return(teamNames);
-    //    return(teamIDS);
+        return(teamNames);
+    //   return(teamIDS);
 }
     
 function getTeamIDS(data) {
@@ -74,7 +74,7 @@ function getAndPopPlayerPositions(teamIDS) {
     $('[data-target-positions]').one('click', function(){
         var positions = [];
         var urlAddon = teamIDS[0];
-        newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg')
+        newURL = ('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + urlAddon + '/profile.json?api_key=' + myAPIKey)
         $.get(newURL, function(data) {
             var playerArray = data.players
             playerArray.forEach(function(stuff){
@@ -164,6 +164,6 @@ function gameSchedule(URL){
     .then(popNavDate)
 }
 
-// startTheProgram(hierarchy);
-// nextStep(hierarchy);
-// gameSchedule(leagueScheduleAPI);
+startTheProgram(hierarchy);
+nextStep(hierarchy);
+gameSchedule(leagueScheduleAPI);

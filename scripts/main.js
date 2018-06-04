@@ -6,3 +6,4 @@ nextStep(hierarchy);
 gameSchedule(leagueScheduleAPI);
 
 teamListener();
+positionListener();

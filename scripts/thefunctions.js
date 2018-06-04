@@ -160,7 +160,7 @@ function getTeamInfo(team){
         return element.name === team;
         })[0];
     var teamKey = foundIt.ID;
-    var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg';
+    var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=' + myAPIKey;
     // console.log(foundIt);
     // console.log(teamKey);
     // console.log(teamInfoURL);
@@ -189,7 +189,7 @@ function getPlayerInfo(team){
         return element.name === team;
     })[0];
     var teamKey = foundIt.ID;
-    var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=bacyjb6cyn45qk6zdcz6hfeg';
+    var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=' + myAPIKey;
     /*console.log(foundIt);
     console.log(teamKey);
     console.log(teamInfoURL); */
@@ -244,4 +244,105 @@ function getPlayerInfo(team){
     });
 }
 
+function getPositionInfo(team, bool){
+    var foundIt = $.grep(teams, function(element){
+        return element.name === team;
+    })[0];
+    var teamKey = foundIt.ID;
+    var teamInfoURL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + teamKey  + '/profile.json?api_key=' + myAPIKey;
+    /*console.log(foundIt);
+    console.log(teamKey);
+    console.log(teamInfoURL); */
+    var libraryArray = [];
+    var libraryArray2 = [];
+    // var itemsArray = [];
+    
+    $.get(teamInfoURL, function (data){
+        var keys = Object.keys(data);
+        // console.log(keys);
+        keys.forEach(function(aKey){
+            var aLibrary = data[aKey];
+            libraryArray.push(aLibrary);
+            libraryArray2.push(aLibrary);
+            libraryArray.forEach(function (data){
+                var items = Object.values(data);
+                // itemsArray.push(items);
+            });
+        });  
+        var items = Object.values(libraryArray[4]);
+        
+        // console.log(items);
+        var playersOnTeam = (libraryArray[8]);
+        playersOnTeam.forEach(function(datum){
+            if (datum.position == bool){
+                console.log(datum);
+            }
+        })
+})
+}
+
 //getPlayerInfo('Braves');
+
+
+
+// // function checkPlayerPos(something){
+//     // $.get(leagueLeaders, function(data){
+//         // var playerPosStats = []
+//         // var santeria = [];
+//         // var libraryArray = [];
+//         // console.log(data);
+//         var values = Object.values(data);
+//         var playerStats = values[1];
+//         playerStats.forEach(function(calls){
+//             var callValue = Object.values(calls);
+//             playerPosStats.push(callValue[3]);
+//             playerPosStats.push(callValue[4]);
+//         })
+//         console.log(playerPosStats)
+//         playerPosStats.forEach(function(calls){
+//             // console.log(calls);
+//             var callKeys = Object.keys(calls);
+//             // console.log(callKeys);
+//             callKeys.forEach(function(blam){
+//                 var lightning = (calls[blam]);
+//                 // console.log(lightning);
+//                 var glowing = lightning['players']
+//                 santeria.push(glowing);
+
+//             })
+//         })
+//         var playerAndPos = {};
+//         santeria.forEach(function(datum){
+//             datum.forEach(function(tonight){
+//                 // console.log(tonight)
+//                 var tempObj = {};
+//                 var playerFullName = tonight['first_name'] + ' ' + tonight['last_name'];
+//                 var playerFullPosition = tonight['primary_position'];
+//                 // console.log(playerFullName);
+//                 libraryArray.push(playerFullName);
+//                 // console.log(playerFullPosition);
+//                 tempObj['position'] = playerFullPosition;
+//                 playerAndPos[playerFullName] = tempObj;
+
+//             })
+//         libraryArray = [...new Set(libraryArray)];
+//         console.log(libraryArray.sort());
+//         console.log(playerAndPos);
+//         })
+        
+//     })
+// }
+function allTeamArray(data, bool){
+    teamArray = []
+    data.forEach(function(obj){
+        teamArray.push(obj['name']);
+    })
+    teamArray.forEach(function(obj, index){
+        setTimeout(function() {
+        console.log(obj);
+        getPositionInfo(obj, bool);
+        }, 1000 * index);
+        
+    })
+    
+}
