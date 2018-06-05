@@ -61,8 +61,8 @@ function dayCheck(){
 
 
 function masterPull(){
-    if (dayCheck()){
-        console.log('true');} 
+    if (dayCheck()){    
+    }
     if (!dayCheck()){
         teamIDS = []
         teams.forEach(function(data){
@@ -160,11 +160,11 @@ function getAndPopPlayerPositions() {
         })
     })
     positionNames = [...new Set(positionNames)]
-    console.log(positionNames);
+    // console.log(positionNames);
     positionNames = positionNames.sort();
     positionNames.forEach(function(uniq){
         uniq1 = positionName[uniq]
-        console.log(uniq1);
+        // console.log(uniq1);
         var newSelector = $(`<option value=${uniq1}>${uniq1}</option>`);
         $('[data-target-positions]').append(newSelector);
         })
@@ -268,7 +268,7 @@ function playerClick(element){
     var children = (element.children())
     var childArr = (Object.values(children));
     childArr.forEach(function(data){
-        console.log(data);
+        // console.log(data);
         $(data).on('click', function(val){
             var playerClicked = (val.target.childNodes['0'].data);
             console.log(val.target);
@@ -311,7 +311,34 @@ function playerClick(element){
     })    
 }
 
+// function getImages(){
+//     var teamProfiles = localStorage.getItem('teamProfile');
+//     teamProfiles = JSON.parse(teamProfiles);
+//     var allPlayers = []
+//     teamProfiles.forEach(function(data){
+//         var allPlayersSplit = data['players']
+//         allPlayersSplit.forEach(function(val){
+//             // console.log(val);
+//             var playerName = val['full_name']
+//             allPlayers.push(playerName);
+//         })
+//     })
+//     allPlayers.forEach(function(data){
+//         var nameArr = data.split(' ');
+//         // console.log(nameArr);
+//         var URL ='https://www.foxsports.com/mlb/' + nameArr[0] + '-' + nameArr[1] + '-player-stats';
+//         // console.log(URL)
+//         $.get(URL, function(res){
+//             console.log(res);
+//             console.log($('.wisgb_logoImage wisfb_bioLargeLogo'));
+//             var imgTag = $('.wisfb_logoImage wisfb_bioLargeLogo').attr('src');
+//             console.log(imgTag);
+            
 
+//         })
+//     })
+//     // console.log(allPlayers);
+// }
 
 
 
@@ -325,3 +352,6 @@ newblue = JSON.parse(newblue);
 // getAndPopPlayerPositions();
 // getPlayerInfo();
 // teamListener()
+
+
+{/* <img class="wisfb_headshotImage wisfb_bioLargeImg" src="https://b.fssta.com/uploads/application/mlb/players/597889.vresize.350.425.medium.67.png" alt="Mookie Betts" onerror="this.src='/foxbox/Static/Style/Images/Global/DefaultHeadshot.png?vt=20180605000000'"> */}
