@@ -14,6 +14,6 @@ popGameSched();
 // positionClicked();
 playerClick($('[data-team-player]'));
 playerClick($('[data-player-info]'));
-getImages();
+// getImages();
 // positionListener();
 
