@@ -1,83 +1,91 @@
-var hierarchy = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/league/hierarchy.json?api_key=' + myAPIKey;
+// var hierarchy = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/league/hierarchy.json?api_key=' + myAPIKey;
 
-function getTeamNames(data) {
-    // $.get(hierarchy, function(data) {
-        teamNames = [];
-        // teamIDS = [];
-        var vals = Object.values(data);
-        var next = Object.values(vals);
-        var blue = next[1];
-        blue.forEach(function(stuff) {
-            var green = Object.values(stuff);
-            var green3 = green[3];
-            var again = Object.keys(green3);
-            // console.log(green3.)
-            again.forEach(function(hey) {
-                var newVar = green3[hey];
-                var newNew = Object.values(newVar);
-                var newNew3 = newNew[3];
-                var newVal = Object.keys(newNew3);
-                newVal.forEach(function(here) {
-                    var hmmm = newNew3[here];
-                    // console.log(hmmm);
-                    teamNames.push(hmmm.name);
-                    // teamIDS.push(hmmm.id)
-                    // return teamIDS;
-                    // return teamNames;
-                })
-            })
-        })
-        return(teamNames);
-    //   return(teamIDS);
-}
+// function getTeamNames(data) {
+//     // $.get(hierarchy, function(data) {
+//         teamNames = 
+//         // teamIDS = [];
+//         var vals = Object.values(data);
+//         var next = Object.values(vals);
+//         var blue = next[1];
+//         blue.forEach(function(stuff) {
+//             var green = Object.values(stuff);
+//             var green3 = green[3];
+//             var again = Object.keys(green3);
+//             // console.log(green3.)
+//             again.forEach(function(hey) {
+//                 var newVar = green3[hey];
+//                 var newNew = Object.values(newVar);
+//                 var newNew3 = newNew[3];
+//                 var newVal = Object.keys(newNew3);
+//                 newVal.forEach(function(here) {
+//                     var hmmm = newNew3[here];
+//                     // console.log(hmmm);
+//                     teamNames.push(hmmm.name);
+//                     // teamIDS.push(hmmm.id)
+//                     // return teamIDS;
+//                     // return teamNames;
+//                 })
+//             })
+//         })
+//         return(teamNames);
+//     //   return(teamIDS);
+// }
     
-function getTeamIDS(data) {
-    // $.get(hierarchy, function(data) {
-        // teamNames = [];
-        teamIDS = [];
-        var vals = Object.values(data);
-        var next = Object.values(vals);
-        var blue = next[1];
-        blue.forEach(function(stuff) {
-            var green = Object.values(stuff);
-            var green3 = green[3];
-            var again = Object.keys(green3);
-            // console.log(green3.)
-            again.forEach(function(hey) {
-                var newVar = green3[hey];
-                var newNew = Object.values(newVar);
-                var newNew3 = newNew[3];
-                var newVal = Object.keys(newNew3);
-                newVal.forEach(function(here) {
-                    var hmmm = newNew3[here];
-                    // console.log(hmmm);
-                    // teamNames.push(hmmm.name);
-                    teamIDS.push(hmmm.id)
-                    // return teamIDS;
-                    // return teamNames;
-                })
-            })
-        })
-    //    return(teamNames);
-       return(teamIDS);
-}
+// function getTeamIDS(data) {
+//     // $.get(hierarchy, function(data) {
+//         // teamNames = [];
+//         teamIDS = [];
+//         var vals = Object.values(data);
+//         var next = Object.values(vals);
+//         var blue = next[1];
+//         blue.forEach(function(stuff) {
+//             var green = Object.values(stuff);
+//             var green3 = green[3];
+//             var again = Object.keys(green3);
+//             // console.log(green3.)
+//             again.forEach(function(hey) {
+//                 var newVar = green3[hey];
+//                 var newNew = Object.values(newVar);
+//                 var newNew3 = newNew[3];
+//                 var newVal = Object.keys(newNew3);
+//                 newVal.forEach(function(here) {
+//                     var hmmm = newNew3[here];
+//                     // console.log(hmmm);
+//                     // teamNames.push(hmmm.name);
+//                     teamIDS.push(hmmm.id)
+//                     // return teamIDS;
+//                     // return teamNames;
+//                 })
+//             })
+//         })
+//     //    return(teamNames);
+//        return(teamIDS);
+// }
     
 
-function popTeamNames(teamNames) {
-    teamNames.forEach(function(name) {
-        var newSelector = $(`<option value=${name}>${name}</option>`);
-        $('[data-target-teams]').append(newSelector);
-    })
-}
+// function popTeamNames() {
+//     var refObject = localStorage.getItem('teamProfile');
+//     refObject = JSON.parse(refObject);
+//     refObject.forEach(function(data){
+//         var teamName = data['name']
+//         var newSelector = $(`<option value=${teamName}>${teamName}</option>`);
+//         $('[data-target-teams]').append(newSelector);
 
-function getAndPopPlayerPositions() {
-    var namePositions = Object.values(positionName);
-    console.log(namePositions);
-    namePositions.forEach(function(place){
-        var newSelector = $(`<option value=${place}>${place}</option>`);
-        $('[data-target-positions]').append(newSelector);
-    })
-}
+//     })
+// }
+
+// function getAndPopPlayerPositions() {
+//     var position = localStorage.getItem('teamProfile');
+//     position = JSON.parse(position);
+//     position.forEach(function(data){
+//         var player = data['players'];
+//         player.forEach(function(val){
+//             var positionName = val['primary_position'];
+//             var newSelector = $(`<option value=${positionName}>${positionName}</option>`);
+//             $('[data-target-positions]').append(newSelector);
+//         })
+//         })
+// }
     
 
 function pullSchedule(data){
@@ -116,13 +124,13 @@ function popNavDate(cleanDate){
 }
 
 
-function startTheProgram(URL){ 
-    var ajaxRequest = $.get(URL);
+// function startTheProgram(URL){ 
+//     var ajaxRequest = $.get(URL);
     
-    ajaxRequest
-    .then(getTeamNames)
-    .then(popTeamNames)
-}
+//     ajaxRequest
+//     .then(getTeamNames)
+//     .then(popTeamNames)
+// }
 
 
 // function nextStep(URL){
@@ -141,6 +149,6 @@ function gameSchedule(URL){
     .then(popNavDate)
 }
 
-startTheProgram(hierarchy);
+// startTheProgram(hierarchy);
 // nextStep(hierarchy);
 gameSchedule(leagueScheduleAPI);
