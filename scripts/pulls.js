@@ -52,7 +52,8 @@ function dayCheck(){
     var date = new Date().toLocaleDateString();
     if( localStorage.yourapp_date == date ){
         return true;
-    } else {    
+    } 
+    if (localStorage.yourapp_date !== date) {    
         localStorage.yourapp_date = date;
         return false;
     }
@@ -60,36 +61,36 @@ function dayCheck(){
 
 
 function masterPull(){
-    if (dayCheck() === true){
-        console.log('true');
-    } else if (dayCheck() === false){
+    if (dayCheck()){
+        console.log('true');} 
+    if (!dayCheck()){
         teamIDS = []
         teams.forEach(function(data){
             var teamID = data['ID']
             teamIDS.push(teamID);
         })
-        var teamProfiles = []
-        teamIDS.forEach(function(data, index){
-            var teamProfileAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + data +  '/profile.json?api_key=' + myAPIKey;
-            setTimeout(function(){
-            $.get(teamProfileAPI, function(val){
-                teamIDOne = {};
-                var id = val['id']
-                var market = val['market']
-                var players = val['players']
-                var venue = val['venue']
-                var name = val['name']
-                teamIDOne['name'] = name;
-                teamIDOne['id'] = id;
-                teamIDOne['market'] = market;
-                teamIDOne['players'] = players;
-                teamIDOne['venue'] = venue;
-                teamProfiles.push(teamIDOne);
-            })
-            console.log(teamProfiles);
-            localStorage.setItem('teamProfile', JSON.stringify(teamProfiles))
-            }, index * 1000)
-        })
+        // var teamProfiles = []
+        // teamIDS.forEach(function(data, index){
+        //     var teamProfileAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + data +  '/profile.json?api_key=' + myAPIKey;
+        //     setTimeout(function(){
+        //     $.get(teamProfileAPI, function(val){
+        //     teamIDOne = {};
+        //     var id = val['id']
+        //     var market = val['market']
+        //     var players = val['players']
+        //     var venue = val['venue']
+        //     var name = val['name']
+        //     teamIDOne['name'] = name;
+        //     teamIDOne['id'] = id;
+        //     teamIDOne['market'] = market;
+        //     teamIDOne['players'] = players;
+        //     teamIDOne['venue'] = venue;
+        //     teamProfiles.push(teamIDOne);
+        // })
+        //     console.log(teamProfiles);
+        //     localStorage.setItem('teamProfile', JSON.stringify(teamProfiles))
+        //     }, index * 1000)
+        // })
         var leagueScheduleAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/games/2018/REG/schedule.json?api_key=' + myAPIKey;
         $.get(leagueScheduleAPI, function(data){
             var cleanDate = [];
@@ -113,19 +114,24 @@ function masterPull(){
     
     daysSorted.forEach(function(date){
         cleanDate.push(moment(date).format('MMM Do YY'));
-        // console.log(cleanDate);
+        console.log(cleanDate);
         return(cleanDate);
     })
-    cleanDate.forEach(function(print){
-        var newSelector = $(`<option value=${print}>${print}</option>`);
-            $('[data-target-schedule]').append(newSelector);
-    })
-        })
+    localStorage.setItem('playDates', JSON.stringify(cleanDate));
+})
 
-    }
 }
-
-function popTeamNames() {
+}
+function popGameSched(){
+    var cleanDate2 = localStorage.getItem('playDates')
+    cleanDate2 = JSON.parse(cleanDate2);
+    // console.log(cleanDate2)
+    cleanDate2.forEach(function(print){
+        var newSelector = $(`<option value=${print}>${print}</option>`);
+        $('[data-target-schedule]').append(newSelector);
+    })
+}
+    function popTeamNames() {
     var refObject = localStorage.getItem('teamProfile');
     refObject = JSON.parse(refObject);
     refObject.forEach(function(data){
@@ -154,11 +160,11 @@ function getAndPopPlayerPositions() {
         })
     })
     positionNames = [...new Set(positionNames)]
-    // console.log(positionNames);
+    console.log(positionNames);
     positionNames = positionNames.sort();
     positionNames.forEach(function(uniq){
         uniq1 = positionName[uniq]
-        // console.log(uniq);
+        console.log(uniq1);
         var newSelector = $(`<option value=${uniq1}>${uniq1}</option>`);
         $('[data-target-positions]').append(newSelector);
         })
@@ -222,18 +228,20 @@ function teamListener(){
 }
 
 function positionListener(){
-    getAndPopPlayerPositions();
+    // getAndPopPlayerPositions();
     $('[data-target-positions]').on('change', function(data){
+        $('[data-position-name]').empty();
+        $('[data-player-info]').empty();
         var positionPicked = $('[data-target-positions] option:selected').text();
         var positionLong = Object.values(positionName);
-        console.log(positionLong);
+        // console.log(positionLong);
         var positionShort = Object.keys(positionName);
         var positionPickedShort = positionShort[positionLong.indexOf(positionPicked)];
-        console.log(positionPickedShort);
+        // console.log(positionPickedShort);
         allPlayer = [];
         var position = localStorage.getItem('teamProfile');
         position = JSON.parse(position);
-        console.log(position);
+        // console.log(position);
         position.forEach(function(val){
             var players = val.players
             players.forEach(function(loop){
@@ -246,12 +254,67 @@ function positionListener(){
             })
         })
         // positionChecker(allPlayer, positionPickedShort);
+        var newH3 = $('<h3>')
+        newH3.append(positionPicked);
+        $('[data-position-name]').append(newH3);
         $('[data-team-div]').addClass('hidden');
         $('[matchup-container]').addClass('hidden');
         $('[data-position-div]').removeClass('hidden');
         
     })
 }
+
+function playerClick(element){
+    var children = (element.children())
+    var childArr = (Object.values(children));
+    childArr.forEach(function(data){
+        console.log(data);
+        $(data).on('click', function(val){
+            var playerClicked = (val.target.childNodes['0'].data);
+            console.log(val.target);
+            if (playerClicked){
+                var teamProfile = localStorage.getItem('teamProfile');
+                teamProfile = JSON.parse(teamProfile);
+                console.log(playerClicked)
+                console.log(val.target);
+                teamProfile.forEach(function(data){
+                    var allPlayers = (data['players'])
+                    allPlayers.forEach(function(loop){
+                        if (playerClicked === loop['full_name']){
+                            console.log(val.target)
+                            var playerID = (loop['id']);
+                            var URL = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/players/' + playerID + '/profile.json?api_key=' + myAPIKey;
+                            $.get(URL, function(stats){
+                                var fullPlayerStats = (stats['player']);
+                                console.log(fullPlayerStats);
+                                var fullName = fullPlayerStats['full_name'];
+                                var birthCity = fullPlayerStats['birthcity'];
+                                var birthCountry = fullPlayerStats['birthcountry'];
+                                var birthDay = fullPlayerStats['birthdate'];
+                                var height = fullPlayerStats['height'];
+                                var weight = fullPlayerStats['weight']
+                                var playPosition = fullPlayerStats['primary_position']
+                                var jersey = fullPlayerStats['jersey_number'];
+                                var team = fullPlayerStats.team.market + ' '  + fullPlayerStats.team.name;
+                                (val.target).innerHTML = '';
+                                (val.target).classList.add('full-info');
+                                (val.target).append(fullName);
+                                (val.target).append(birthCity);
+                                (val.target).append(birthCountry);
+                                (val.target).append(birthDay);
+                            })
+                        }
+                    })
+                })
+            }
+        })
+    })    
+}
+
+
+
+
+
 
 
 

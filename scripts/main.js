@@ -9,5 +9,10 @@ popTeamNames();
 getAndPopPlayerPositions();
 teamListener();
 positionListener();
+popGameSched();
+// playerClick();
+// positionClicked();
+playerClick($('[data-team-player]'));
+playerClick($('[data-player-info]'));
 // positionListener();
 

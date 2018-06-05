@@ -141,14 +141,14 @@ function popNavDate(cleanDate){
 //     .then(getAndPopPlayerPositions)
 //     // .then(popPlayerPositions)
 // }
-function gameSchedule(URL){
-    var ajaxRequest = $.get(URL)
+// function gameSchedule(URL){
+    // var ajaxRequest = $.get(URL)
 
-    ajaxRequest
-    .then(pullSchedule)
-    .then(popNavDate)
-}
+    // ajaxRequest
+    // .then(pullSchedule)
+    // .then(popNavDate)
+// }
 
 // startTheProgram(hierarchy);
 // nextStep(hierarchy);
-gameSchedule(leagueScheduleAPI);
+// gameSchedule(leagueScheduleAPI);

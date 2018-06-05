@@ -1,47 +1,47 @@
 
-function getTeamID(teamName){
+// function getTeamID(teamName){
     
-  $.get(standingsAPI, function(data){
-    var libraryArray = [];
-    var keys = Object.keys(data);
-   // console.log(keys);
+//   $.get(standingsAPI, function(data){
+//     var libraryArray = [];
+//     var keys = Object.keys(data);
+//    // console.log(keys);
 
-    keys.forEach(function(aKey){
-        var aLibrary = data[aKey];
-        libraryArray.push(aLibrary);
-     //   console.log(libraryArray);
+//     keys.forEach(function(aKey){
+//         var aLibrary = data[aKey];
+//         libraryArray.push(aLibrary);
+//      //   console.log(libraryArray);
     
-    libraryArray.forEach(function (data){
-        var itemsArray = [];
-        var items = Object.values(data['season']);
-         //console.log(items);
+//     libraryArray.forEach(function (data){
+//         var itemsArray = [];
+//         var items = Object.values(data['season']);
+//          //console.log(items);
     
-         items[3].forEach(function (data){
-        var leaguesData = Object.values(data);
-       // console.log(leaguesData);
+//          items[3].forEach(function (data){
+//         var leaguesData = Object.values(data);
+//        // console.log(leaguesData);
 
-        leaguesData[3].forEach(function(data) {
-            var divisionData = Object.values(data);
-           // console.log(divisionData);
+//         leaguesData[3].forEach(function(data) {
+//             var divisionData = Object.values(data);
+//            // console.log(divisionData);
 
-        divisionData[3].forEach(function(data) {
-            var teamData = Object.values(data);
-           // console.log(teamData);
-            if (teamName == data.name){
-                var ID = data.id;
-               // console.log(data.name);
-                return console.log(data.name + '    ' + ID);
+//         divisionData[3].forEach(function(data) {
+//             var teamData = Object.values(data);
+//            // console.log(teamData);
+//             if (teamName == data.name){
+//                 var ID = data.id;
+//                // console.log(data.name);
+//                 return console.log(data.name + '    ' + ID);
                 
-                 }
+//                  }
                          
-           })
-         })
-       });
-     }); 
-   });
-});
+//            })
+//          })
+//        });
+//      }); 
+//    });
+// });
 
-}
+// }
 
 
 var teams  =       [ {name: 'Red Sox',  ID:  '93941372-eb4c-4c40-aced-fe3267174393'},
@@ -78,46 +78,46 @@ var teams  =       [ {name: 'Red Sox',  ID:  '93941372-eb4c-4c40-aced-fe32671743
 
 
 
-function getTeamName(idNumber){
-    $.get(standingsAPI, function(data){
-    var libraryArray = [];
-    var keys = Object.keys(data);
-   // console.log(keys);
+// function getTeamName(idNumber){
+//     $.get(standingsAPI, function(data){
+//     var libraryArray = [];
+//     var keys = Object.keys(data);
+//    // console.log(keys);
 
-    keys.forEach(function(aKey){
-        var aLibrary = data[aKey];
-        libraryArray.push(aLibrary);
-       // console.log(libraryArray);
+//     keys.forEach(function(aKey){
+//         var aLibrary = data[aKey];
+//         libraryArray.push(aLibrary);
+//        // console.log(libraryArray);
     
-    libraryArray.forEach(function (data){
-        var itemsArray = [];
-        var items = Object.values(data['season']);
-        // console.log(items);
+//     libraryArray.forEach(function (data){
+//         var itemsArray = [];
+//         var items = Object.values(data['season']);
+//         // console.log(items);
     
-         items[3].forEach(function (data){
-        var leaguesData = Object.values(data);
-       // console.log(leaguesData);
+//          items[3].forEach(function (data){
+//         var leaguesData = Object.values(data);
+//        // console.log(leaguesData);
 
-        leaguesData[3].forEach(function(data) {
-            var divisionData = Object.values(data);
-           // console.log(divisionData);
+//         leaguesData[3].forEach(function(data) {
+//             var divisionData = Object.values(data);
+//            // console.log(divisionData);
 
-        divisionData[3].forEach(function(data) {
-            var teamData = Object.values(data);
-           // console.log(teamData);
-            if (idNumber == data.id){
-                var name = data.name;
-               // console.log(data.name);
-               // console.log(data.id);
-                return console.log(name);
-            }
-           })
-         })
-       });
-     }); 
-   });
-});
-}
+//         divisionData[3].forEach(function(data) {
+//             var teamData = Object.values(data);
+//            // console.log(teamData);
+//             if (idNumber == data.id){
+//                 var name = data.name;
+//                // console.log(data.name);
+//                // console.log(data.id);
+//                 return console.log(name);
+//             }
+//            })
+//          })
+//        });
+//      }); 
+//    });
+// });
+// }
 
 
 //getTeamName('93941372-eb4c-4c40-aced-fe3267174393');
