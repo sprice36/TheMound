@@ -482,63 +482,63 @@ function dateListener(){
         })
     })
 }
-function clickListener(element){
-    // console.log(element)
-    var children = (element.children())
-    var childArr = (Object.values(children));
-    console.log(childArr);
-    childArr.forEach(function(data){
-        console.log(data)
-        $(data).on('click', function(val){
-            console.log(val)
-            var $homeImg = (val.currentTarget.childNodes['0'])
-            console.log($homeImg)
-            var homeSrc = $($homeImg).attr('src')
-            images.forEach(function(loop){
-                if (homeSrc === loop['image']){
-                    console.log(homeSrc)
-                    console.log(loop)
-                    var homeName = loop['name']
-                    var storedLoc = localStorage.getItem('gameLoc')
-                    storedLoc = JSON.parse(storedLoc);
-                    console.log(storedLoc)
-                    storedLoc.forEach(function(again){
-                        if (homeName === again['home']){
-                            var locData = again['loc']
-                            console.log(locData)
-                            if (locData != null && locData['lat'] > 0 ){   
-                                var latString = locData['lat'];
-                                var latNumber = parseFloat(latString);
-                                var lngString = locData['lng'];
-                                var lngNumber = parseFloat(lngString);
-                            var locationObject = {lat: latNumber , lng: lngNumber}; 
-                            console.log(locationObject)
-                            $('[data-target-matchup]').addClass('hidden') 
-                            $('.default-container').addClass('hidden')                      
-                            var mapImg = initMap(locationObject);
-                            $('[data-location]').append(mapImg);
-                            $('[data-location]').removeClass('hidden')
-                        }
+// function clickListener(element){
+//     // console.log(element)
+//     var children = (element.children())
+//     var childArr = (Object.values(children));
+//     console.log(childArr);
+//     childArr.forEach(function(data){
+//         console.log(data)
+//         $(data).on('click', function(val){
+//             console.log(val)
+//             var $homeImg = (val.currentTarget.childNodes['0'])
+//             console.log($homeImg)
+//             var homeSrc = $($homeImg).attr('src')
+//             images.forEach(function(loop){
+//                 if (homeSrc === loop['image']){
+//                     console.log(homeSrc)
+//                     console.log(loop)
+//                     var homeName = loop['name']
+//                     var storedLoc = localStorage.getItem('gameLoc')
+//                     storedLoc = JSON.parse(storedLoc);
+//                     console.log(storedLoc)
+//                     storedLoc.forEach(function(again){
+//                         if (homeName === again['home']){
+//                             var locData = again['loc']
+//                             console.log(locData)
+//                             if (locData != null && locData['lat'] > 0 ){   
+//                                 var latString = locData['lat'];
+//                                 var latNumber = parseFloat(latString);
+//                                 var lngString = locData['lng'];
+//                                 var lngNumber = parseFloat(lngString);
+//                             var locationObject = {lat: latNumber , lng: lngNumber}; 
+//                             console.log(locationObject)
+//                             $('[data-target-matchup]').addClass('hidden') 
+//                             $('.default-container').addClass('hidden')                      
+//                             var mapImg = initMap(locationObject);
+//                             $('[data-location]').append(mapImg);
+//                             $('[data-location]').removeClass('hidden')
+//                         }
                         
                         
-                    }
-                })
-            }
-        })
+//                     }
+//                 })
+//             }
+//         })
         
-    })
-})
-}
-function initMap(gameLocation) {
-    console.log('success')
-    // The location of the games*/
-    // The map, centered at the location
-    var map = new google.maps.Map(
-        document.getElementById('map'), { center: gameLocation, zoom: 18, mapTypeId: google.maps.MapTypeId.SATELLITE});
-    // The marker, positioned at the game location
-    var marker = new google.maps.Marker({position: gameLocation, map: map});
-    // console.log('success')
-}
+//     })
+// })
+// }
+// function initMap(gameLocation) {
+//     console.log('success')
+//     // The location of the games*/
+//     // The map, centered at the location
+//     var map = new google.maps.Map(
+//         document.getElementById('map'), { center: gameLocation, zoom: 18, mapTypeId: google.maps.MapTypeId.SATELLITE});
+//     // The marker, positioned at the game location
+//     var marker = new google.maps.Marker({position: gameLocation, map: map});
+//     // console.log('success')
+// }
 
 
 
