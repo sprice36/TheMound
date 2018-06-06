@@ -95,34 +95,34 @@ function dayCheck(){
 function masterPull(){
     if (dayCheck()){    
     }
-    if (!dayCheck()){
+    if (!dayCheck() || null){
         teamIDS = []
         teams.forEach(function(data){
             var teamID = data['ID']
             teamIDS.push(teamID);
         })
-        // var teamProfiles = []
-        // teamIDS.forEach(function(data, index){
-        //     var teamProfileAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + data +  '/profile.json?api_key=' + myAPIKey;
-        //     setTimeout(function(){
-        //     $.get(teamProfileAPI, function(val){
-        //     teamIDOne = {};
-        //     var id = val['id']
-        //     var market = val['market']
-        //     var players = val['players']
-        //     var venue = val['venue']
-        //     var name = val['name']
-        //     teamIDOne['name'] = name;
-        //     teamIDOne['id'] = id;
-        //     teamIDOne['market'] = market;
-        //     teamIDOne['players'] = players;
-        //     teamIDOne['venue'] = venue;
-        //     teamProfiles.push(teamIDOne);
-        // })
-        //     console.log(teamProfiles);
-        //     localStorage.setItem('teamProfile', JSON.stringify(teamProfiles))
-        //     }, index * 1000)
-        // })
+        var teamProfiles = []
+        teamIDS.forEach(function(data, index){
+            var teamProfileAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/teams/' + data +  '/profile.json?api_key=' + myAPIKey;
+            setTimeout(function(){
+            $.get(teamProfileAPI, function(val){
+            teamIDOne = {};
+            var id = val['id']
+            var market = val['market']
+            var players = val['players']
+            var venue = val['venue']
+            var name = val['name']
+            teamIDOne['name'] = name;
+            teamIDOne['id'] = id;
+            teamIDOne['market'] = market;
+            teamIDOne['players'] = players;
+            teamIDOne['venue'] = venue;
+            teamProfiles.push(teamIDOne);
+        })
+            console.log(teamProfiles);
+            localStorage.setItem('teamProfile', JSON.stringify(teamProfiles))
+            }, index * 1000)
+        })
         var leagueScheduleAPI = 'http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/games/2018/REG/schedule.json?api_key=' + myAPIKey;
         $.get(leagueScheduleAPI, function(data){
             var cleanDate = [];
@@ -249,19 +249,29 @@ function getPlayerInfo(team){
                 // console.log(val);
                 var playerInfoArr = []
                 var playerName = val.full_name
-                playerInfoArr.push(playerName);
                 var playerJersey = val.jersey_number
-                playerInfoArr.push(playerJersey);
                 var playerBirth = val.birthdate
-                playerInfoArr.push(playerBirth);
                 var playerPosition = val.primary_position
-                playerInfoArr.push(positionName[playerPosition]);
                 // console.log(playerInfoArr)
                 var newPlayerInfo = $('<div>');
-                playerInfoArr.forEach(function(blurb){
+                var newH1 = $('<h1>')
+                if (playerJersey){
+                    newH1.append(playerName + '  #' + playerJersey)
+                }
+                if (!playerJersey){
+                    newH1.append(playerName)
+                }
+                var newP = $('<p>')
+                newP.append(positionName[playerPosition])
+                var newP2 = $('<p>')
+                newP2.append(playerBirth)
+                newPlayerInfo.append(newH1);
+                newPlayerInfo.append(newP)
+                newPlayerInfo.append(newP2);
+                // playerInfoArr.forEach(function(blurb){
                     // console.log(blurb);
-                    $(newPlayerInfo).append(blurb);
-                })
+                    // $(newPlayerInfo).append(blurb);
+                // })
                 $('[data-team-player]').append(newPlayerInfo);
 
             })
@@ -304,9 +314,20 @@ function positionListener(){
             players.forEach(function(loop){
                 // console.log(loop);
                 if (loop['primary_position'] === positionPickedShort){
-                    var newDiv = $('<div>');
-                    newDiv.append(loop['full_name']);
-                    $('[data-player-info]').append(newDiv);
+                    var teamName = val.name
+                    // console.log(teamName)
+                    images.forEach(function(again){
+                        if (teamName === again['name']){
+                            var imgURL = again['image']
+                            // console.log(imgURL)
+                            var newIMG = $('<img>');
+                            newIMG.attr('src', imgURL)
+                            var newDiv = $('<div>');
+                            newDiv.append(newIMG)
+                            newDiv.append(loop['full_name'] + ' #' + loop['jersey_number']);
+                            $('[data-player-info]').append(newDiv);
+                        }
+                    })
                 }
             })
         })
@@ -319,17 +340,20 @@ function positionListener(){
         $('[data-position-div]').removeClass('hidden');
         
     })
+    playerClick($('[data-player-info] div'));
 }
 
 function playerClick(element){
     var children = (element.children())
+    console.log(children)
     var childArr = (Object.values(children));
     childArr.forEach(function(data){
         console.log(data);
         $(data).on('click', function(val){
-            var playerClicked = (val.target.childNodes['0'].data);
+            // var playerClicked = (val.target.childNodes['0'].data);
+            // console.log(playerClicked)
             console.log(val.target);
-            if (playerClicked){
+            if (val.target){
                 var teamProfile = localStorage.getItem('teamProfile');
                 teamProfile = JSON.parse(teamProfile);
                 console.log(playerClicked)
