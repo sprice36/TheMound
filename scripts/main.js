@@ -7,13 +7,15 @@
 masterPull();
 popTeamNames();
 getAndPopPlayerPositions();
+popGameSched();
 teamListener();
 positionListener();
-popGameSched();
+dateListener();
 // playerClick();
 // positionClicked();
 playerClick($('[data-team-player]'));
 playerClick($('[data-player-info]'));
+clickListener($('[data-target-matchup]'));
 // getImages();
 // positionListener();
 
