@@ -1,6 +1,6 @@
-# Welcome to The Mound. When Cracker Jacks Won't Cut It. 
-
-<img src= 'http://www.kinyu-z.net/data/wallpapers/236/1530474.jpg'>
+# Welcome to The Mound. 
+ 
+<img src= 'https://i.pinimg.com/originals/5d/70/be/5d70be9a2975b05d242d5490dd8b6801.jpg'>
 
 ## Table of Contents
 
@@ -16,9 +16,9 @@ have the perfect site for your baseball fix.
 
 Key Features
 
--Ability to view statistics of your favorite team and players
--Search players by position or team
--View the schedule of your team by date 
+<li> Ability to view statistics of your favorite team and players </li>
+<li> Search players by position or team </li>
+<li> View the schedule of your team by date </li>
 
 ## Creating The Mound
 
