@@ -40,8 +40,11 @@ Other than that it was a great learning experience.
 ## Missing features.
 -Google Maps API
 
+##Created by : 
+1. Sebastian Price    <a href="https://github.com/sprice36">https://github.com/sprice36</a>    
+<a href="https://www.linkedin.com/in/sprice36">www.linkedin.com/in/sprice36</a>
 
-
+2. Joshua Brown 
 
 
 
