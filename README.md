@@ -6,7 +6,9 @@
 
 1. About The Mound
 
-2. Using The Mound 
+2. Creating The Mound
+
+3. Using The Mound 
 
 ## About the Mound
  
@@ -32,20 +34,28 @@ The website can be accessed by any web browser on a PC, Mac or mobile phone. Whe
 the website where they can click on a variety of options including searching for their
 favorite players, teams or view their teams schedules.
 
+1. Select your favorite team in the left most option to view the players on the current roster for this season. 
+
+2. Select your favorite player's position in the next option to view all the players at the specific position.
+
+3. Select today or any other date to view all the teams scheduled to play that day.
+
 ## Where we struck out..
 There was some complications in appending multiple Google maps for each of the game's 
-locations to the div. Also the baseball APIs we used wasnt as smooth as we had hoped. 
-Other than that it was a great learning experience.
+locations to the div. 
 
 ## Missing features.
 -Google Maps API
 
+## A sincere thanks to <a href = "https://developer.sportradar.com/">Sportradar.com</a> for allowing the use of their MLB API.
+
+
 ## Created by : 
-1. Sebastian Price    <a href="https://github.com/sprice36">https://github.com/sprice36</a>    
+Sebastian Price and Joshua Brown 
+<a href="https://github.com/sprice36">https://github.com/sprice36</a>    
 <a href="https://www.linkedin.com/in/sprice36">www.linkedin.com/in/sprice36</a>
 
-2. Joshua Brown 
-
+ 
 
 
 
