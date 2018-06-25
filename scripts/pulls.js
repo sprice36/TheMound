@@ -1,5 +1,6 @@
-var myAPIKey = 'kmwuyu7p3m8npfp6pquatdtk'
-
+//var myAPIKey = 'kmwuyu7p3m8npfp6pquatdtk'
+//var myAPIKey = 'q6hs5yjn3f87a4ucsxzxuc6m'
+var myAPIKey = 'u627wfvan4aau3f53bd6c8gw'
 
 var teams  =       [ 
     {name: 'Red Sox',  ID:  '93941372-eb4c-4c40-aced-fe3267174393'},
@@ -93,9 +94,10 @@ function dayCheck(){
 
 
 function masterPull(){
-    if (dayCheck()){    
+   /* var savedDate = localStorage.getItem('date'); */
+    if (!dayCheck()){    
     }
-    if (!dayCheck() || null){
+    if (dayCheck() || null){
         teamIDS = []
         teams.forEach(function(data){
             var teamID = data['ID']
@@ -150,7 +152,7 @@ function masterPull(){
                 return(cleanDate);
             })
     localStorage.setItem('playDates', JSON.stringify(cleanDate));
-            $.get('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/seasons/2018/REG/standings.json?api_key=kmwuyu7p3m8npfp6pquatdtk'
+            $.get('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/seasons/2018/REG/standings.json?api_key=' + myAPIKey
             , function(data){
                 localStorage.setItem('ranks', JSON.stringify(data))
     })
@@ -286,12 +288,15 @@ function teamListener(){
         console.log(teamPicked);
         // getTeamInfo(teamPicked);
         getPlayerInfo(teamPicked);
+        
         $('[data-team-div]').removeClass('hidden');
+        $('[data-default-div]').removeClass('hidden');
         $('[matchup-container]').addClass('hidden');
         $('[data-position-div]').addClass('hidden');
     })
     
 }
+
 
 function positionListener(){
     // getAndPopPlayerPositions();
@@ -338,6 +343,7 @@ function positionListener(){
         $('[data-team-div]').addClass('hidden');
         $('[matchup-container]').addClass('hidden');
         $('[data-position-div]').removeClass('hidden');
+        $('[data-default-div]').removeClass('hidden');
         
     })
     playerClick($('[data-player-info] div'));
@@ -429,7 +435,7 @@ function dateListener(){
         // $('[data-target-matchup]').removeClass('hidden');
         var datePicked = $('[data-target-schedule] option:selected').text();
         console.log(datePicked);
-        $.get('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/games/' + datePicked + '/schedule.json?api_key=q6hs5yjn3f87a4ucsxzxuc6m', function(data){
+        $.get('http://my-little-cors-proxy.herokuapp.com/http://api.sportradar.us/mlb/trial/v6.5/en/games/' + datePicked + '/schedule.json?api_key=' + myAPIKey, function(data){
             var schedule = data['games']
             // console.log(data);
             // console.log(schedule)
@@ -491,6 +497,7 @@ function dateListener(){
                 $('[data-team-div]').addClass('hidden');
                 $('[matchup-container]').removeClass('hidden');
                 $('[data-position-div]').addClass('hidden');
+                $('[data-default-div]').removeClass('hidden');
                 var gameDatum = {}
                 
                 var location = val.loc
@@ -506,75 +513,8 @@ function dateListener(){
         })
     })
 }
-// function clickListener(element){
-//     // console.log(element)
-//     var children = (element.children())
-//     var childArr = (Object.values(children));
-//     console.log(childArr);
-//     childArr.forEach(function(data){
-//         console.log(data)
-//         $(data).on('click', function(val){
-//             console.log(val)
-//             var $homeImg = (val.currentTarget.childNodes['0'])
-//             console.log($homeImg)
-//             var homeSrc = $($homeImg).attr('src')
-//             images.forEach(function(loop){
-//                 if (homeSrc === loop['image']){
-//                     console.log(homeSrc)
-//                     console.log(loop)
-//                     var homeName = loop['name']
-//                     var storedLoc = localStorage.getItem('gameLoc')
-//                     storedLoc = JSON.parse(storedLoc);
-//                     console.log(storedLoc)
-//                     storedLoc.forEach(function(again){
-//                         if (homeName === again['home']){
-//                             var locData = again['loc']
-//                             console.log(locData)
-//                             if (locData != null && locData['lat'] > 0 ){   
-//                                 var latString = locData['lat'];
-//                                 var latNumber = parseFloat(latString);
-//                                 var lngString = locData['lng'];
-//                                 var lngNumber = parseFloat(lngString);
-//                             var locationObject = {lat: latNumber , lng: lngNumber}; 
-//                             console.log(locationObject)
-//                             $('[data-target-matchup]').addClass('hidden') 
-//                             $('.default-container').addClass('hidden')                      
-//                             var mapImg = initMap(locationObject);
-//                             $('[data-location]').append(mapImg);
-//                             $('[data-location]').removeClass('hidden')
-//                         }
-                        
-                        
-//                     }
-//                 })
-//             }
-//         })
-        
-//     })
-// })
-// }
-// function initMap(gameLocation) {
-//     console.log('success')
-//     // The location of the games*/
-//     // The map, centered at the location
-//     var map = new google.maps.Map(
-//         document.getElementById('map'), { center: gameLocation, zoom: 18, mapTypeId: google.maps.MapTypeId.SATELLITE});
-//     // The marker, positioned at the game location
-//     var marker = new google.maps.Marker({position: gameLocation, map: map});
-//     // console.log('success')
-// }
-
-
-
 
 
 // masterPull();
 var newblue = localStorage.getItem('teamProfile');
 newblue = JSON.parse(newblue);
-// popTeamNames();
-// getAndPopPlayerPositions();
-// getPlayerInfo();
-// teamListener()
-
-
-{/* <img class="wisfb_headshotImage wisfb_bioLargeImg" src="https://b.fssta.com/uploads/application/mlb/players/597889.vresize.350.425.medium.67.png" alt="Mookie Betts" onerror="this.src='/foxbox/Static/Style/Images/Global/DefaultHeadshot.png?vt=20180605000000'"> */}
