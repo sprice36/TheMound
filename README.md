@@ -2,6 +2,10 @@
  
 <img src= 'https://i.pinimg.com/originals/5d/70/be/5d70be9a2975b05d242d5490dd8b6801.jpg'>
 
+## YouTube Demo
+
+<a href="https://youtu.be/5RvMv99PBJQ" target="_blank">Click here for the full demo on youtube!</a>
+
 ## Table of Contents
 
 1. About The Mound
@@ -41,10 +45,12 @@ Other than that it was a great learning experience.
 -Google Maps API
 
 ## Created by : 
-1. Sebastian Price    <a href="https://github.com/sprice36">https://github.com/sprice36</a>    
+1. Joshua Brown 
+
+2. Sebastian Price    <a href="https://github.com/sprice36">https://github.com/sprice36</a>    
 <a href="https://www.linkedin.com/in/sprice36">www.linkedin.com/in/sprice36</a>
 
-2. Joshua Brown 
+
 
 
 
